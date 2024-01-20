@@ -15,9 +15,14 @@ window.state = {};
 
 function CameraUse (props) {
   const [info, setInfo] = useState(false) ;
+  const [imageUri, setImageUri] = useState("");
+  const [givenText, setGivenText] = useState("");
+
   function handleTakePhoto (dataUri) {
     // Do stuff with the photo...
     console.log('takePhoto');
+    setImageUri(dataUri);
+
     alert(dataUri);
     fetch(dataUri)
     .then(response => response.blob())
@@ -42,7 +47,7 @@ function CameraUse (props) {
         })
         .catch((err)=>{
           alert(err);
-          setInfo({"test":1});
+          setInfo({"textIdentified":"test"});
         });
     })
   }
@@ -54,7 +59,7 @@ function CameraUse (props) {
         info === false ? 
         <div style={{"margin": 10}}>
           <h1>Take a photo of handwriting!</h1>
-          <p>Text to write: "{text}"</p>
+          <p>Text to write: <input value={givenText} onChange={(e) => setGivenText(e.target.value)}></input></p>
           <Camera
             onTakePhoto = { (dataUri) => { handleTakePhoto(dataUri); } }
           />
@@ -62,8 +67,11 @@ function CameraUse (props) {
         :
         <div style={{"margin": 10}}>
           <h1>Feedback</h1>
-
-          {JSON.stringify(info)}
+          {/* Find difference */}
+          {/*JSON.stringify(info)*/}
+          <p>{givenText}</p>
+          <p>{info.textIdentified}</p>
+          <img src={imageUri}></img>
         </div>
       }
     </>

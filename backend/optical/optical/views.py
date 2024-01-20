@@ -17,7 +17,7 @@ def my_view(request):
 
         # Handle the form data here
         form_data = request.POST
-        return JsonResponse({"message": f'Form data received: {form_data}'})
+        return JsonResponse({"message": f'Form data received: {form_data}', "textIdentified" : "tesseract"})
         
     data = {"message": "Hello, Django!"}
     return JsonResponse(data)
