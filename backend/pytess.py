@@ -9,11 +9,10 @@ images = ["sample_7.jpeg"]
 def convert_file(input_image_path):
     filepath, filename = os.path.split(input_image_path)
     filename, ext = os.path.split(filename)
-    if ext == ".jpeg":
-        ext = ".jpg"
-    elif ext == ".png":
+    if ext == ".png":
         image = Image.open(input_image_path).convert("RGB")
-    image.save(os.path.join(filepath, f"{filename}{ext}"))
+        image.save(os.path.join(filepath, f"{filename}.jpg"))
+        # OK so now a jpg is created. the old png is still sitting here, by the way. TODO
 
 
 def preprocessing(input_image_path):
