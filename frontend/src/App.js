@@ -21,9 +21,9 @@ const ENDPOINT = "http://localhost:8000/ai/";
 window.state = {};
 
 function CameraUse(props) {
-  const [info, setInfo] = useState({ textIdentified: "SinGaporE" });
+  const [info, setInfo] = useState(false);
   const [imageUri, setImageUri] = useState("");
-  const [givenText, setGivenText] = useState("Singapore");
+  const [givenText, setGivenText] = useState("");
   const theme = useTheme();
 
   function handleTakePhoto(dataUri) {
@@ -77,7 +77,7 @@ function CameraUse(props) {
         },
       }}
     >
-      {info === true ? (
+      {info === false ? (
         <div style={{ margin: 10 }}>
           <Typography align="center" variant="h3">
             Check your handwriting!
