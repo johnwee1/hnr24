@@ -108,17 +108,22 @@ function CameraUse(props) {
           </Box>
         </div>
       ) : (
-        <div style={{ margin: 10 }}>
+        <div style={{ margin: 10, width:"100vw" }}>
           <Typography variant="h3">Feedback</Typography>
-          {/* Find difference */}
-          {/*JSON.stringify(info)*/}
-          <p>{givenText}</p>
-          <p>{info.textIdentified}</p>
-          <Diff
-            string2={givenText}
-            string1={info.textIdentified}
-            mode="characters"
-          />
+          <Box
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <p>{givenText}</p>
+            <p>{info.textIdentified}</p>
+            <Diff
+              string2={givenText}
+              string1={info.textIdentified}
+              mode="characters"
+            />
+          </Box>
           <br/>
           <Box width="100%" height="80vw">
             <img src={imageUri}></img>
