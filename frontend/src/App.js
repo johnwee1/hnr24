@@ -52,17 +52,19 @@ function CameraUse (props) {
     <>
       {
         info === false ? 
-        <>
+        <div style={{"margin": 10}}>
           <h1>Take a photo of handwriting!</h1>
           <p>Text to write: "{text}"</p>
           <Camera
             onTakePhoto = { (dataUri) => { handleTakePhoto(dataUri); } }
           />
-        </>
+        </div>
         :
-        <>
+        <div style={{"margin": 10}}>
+          <h1>Feedback</h1>
+
           {JSON.stringify(info)}
-        </>
+        </div>
       }
     </>
   );
@@ -73,7 +75,7 @@ function App() {
   return (
     <Router>
         <Routes>
-            <Route exact path="/" element={<h1>Home</h1>} />
+            <Route exact path="/" element={<CameraUse/>} />
             <Route path="/about" element={<CameraUse/>} />
             <Route path="/contact" element={<h1>Home</h1>}/>
             <Route path="/blogs" element={<h1>blogs</h1>}/>
