@@ -6,6 +6,7 @@ WORKDIR /app
 
 # Update the package list and install Tesseract OCR
 RUN apt-get update
+RUN apt-get install -y vim
 RUN apt-get install -y tesseract-ocr
 RUN apt-get install -y libtesseract-dev
 RUN apt-get install -y python3
