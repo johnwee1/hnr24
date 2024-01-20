@@ -3,7 +3,7 @@ from PIL import Image
 from PIL import ImageEnhance
 import os
 
-images = ["images/aminoapps.jpg"]
+images = ["images/baseline.jpeg"]
 
 with PyTessBaseAPI(path="tessdata_best") as api:
     for img in images:
