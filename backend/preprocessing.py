@@ -1,51 +1,47 @@
 from PIL import Image
 from PIL import ImageEnhance
+import cv2
 import os
+import numpy as np
+from deskew import Deskew
+
+COMPRESSION_LEVEL = 3
+
+# def convert_file(input_image_path):
+#     # converts file from png to jpeg
+#     filepath, filename = os.path.split(input_image_path)
+#     filename, ext = os.path.split(filename)
+#     if ext == ".png":
+#         image = Image.open(input_image_path).convert("RGB")
+#         image.save(os.path.join(filepath, f"{filename}.jpg"))
+#         # OK so now a jpg is created. the old png is still sitting here, by the way. TODO
 
 
-def convert_file(input_image_path):
-    filepath, filename = os.path.split(input_image_path)
-    filename, ext = os.path.split(filename)
-    if ext == ".png":
-        image = Image.open(input_image_path).convert("RGB")
-        image.save(os.path.join(filepath, f"{filename}.jpg"))
-        # OK so now a jpg is created. the old png is still sitting here, by the way. TODO
+def convert_to_png(input_path, output_path=None):
+    if output_path is None:
+        path, ext = os.path.splitext(input_path)
+        output_path = f"{path}.png"
+    jpeg_image = cv2.imread(input_path)
+    cv2.imwrite(
+        output_path, jpeg_image, [int(cv2.IMWRITE_PNG_COMPRESSION), COMPRESSION_LEVEL]
+    )
 
 
-def preprocessing(input_image_path):
-    # changes images to grayscale
-    # Open the image file
-    original_image = Image.open(input_image_path)
-    grayscale_image = original_image.convert("L")
-
-    enhancer = ImageEnhance.Contrast(grayscale_image)
-    contrast_factor = 1.8  # >=1 means increased contrast
-    contrast_img = enhancer.enhance(contrast_factor)
-
-    # Save the preprocessed image
-    contrast_img.save(input_image_path)
-
-
-def preprocessing_cv2(input_image_path):
+def preprocessing_cv2(input_image_path, override=False):
+    """Preprocess an image by converting light-colored background to black and text to white."""
+    input_image_path = os.path.join(os.path.dirname(__file__), input_image_path)
     # Read the image using OpenCV
-    original_image = cv2.imread(input_image_path)
+    image = cv2.imread(input_image_path)
 
-    # Convert the image to grayscale
-    grayscale_image = cv2.cvtColor(original_image, cv2.COLOR_BGR2GRAY)
-
-    # Increase contrast using histogram equalization
-    clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
-    contrast_img = clahe.apply(grayscale_image)
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    blur = cv2.GaussianBlur(gray, (9, 9), 0)
+    thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
 
     # Save the preprocessed image
-    cv2.imwrite(input_image_path, contrast_img)
-
-
-# def run_function(ls, function):
-#     res = []
-#     for i in ls:
-#         res.append(function(i))
-#     return res
-
-
-# run_function(images, preprocessing)
+    if override:
+        output_image_path = input_image_path
+    else:
+        output_image_name, ext = os.path.splitext(input_image_path)
+        output_image_path = f"{output_image_name}.png"
+    cv2.imwrite(output_image_path, thresh)
+    return input_image_path
