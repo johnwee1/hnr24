@@ -23,14 +23,14 @@ function CameraUse (props) {
     console.log('takePhoto');
     setImageUri(dataUri);
 
-    alert(dataUri);
+    //alert(dataUri);
     fetch(dataUri)
     .then(response => response.blob())
     .then(blob => {
         const file = new File([blob], "sample.png", {type: blob.type})
         window.state.file = file;
         console.log(file);    //File object
-        alert(file);
+        //alert(file);
         return file
     }).then(file => {
       const formData = new FormData();

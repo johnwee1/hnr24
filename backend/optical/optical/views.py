@@ -1,5 +1,60 @@
 from django.http import JsonResponse
 import os
+
+#####################################################################################
+from tesserocr import PyTessBaseAPI
+from PIL import Image
+from PIL import ImageEnhance
+import os
+
+images = ["sample_7.jpeg"]
+
+
+def convert_file(input_image_path):
+    filepath, filename = os.path.split(input_image_path)
+    filename, ext = os.path.split(filename)
+    if ext == ".jpeg":
+        ext = ".jpg"
+    elif ext == ".png":
+        image = Image.open(input_image_path).convert("RGB")
+    image.save(os.path.join(filepath, f"{filename}{ext}"))
+
+
+def preprocessing(input_image_path):
+    # changes images to grayscale
+    # Open the image file
+    original_image = Image.open(input_image_path)
+
+    # Convert the image to grayscale
+    grayscale_image = original_image.convert("L")
+
+    enhancer = ImageEnhance.Contrast(grayscale_image)
+
+    # Adjust the contrast factor (1.0 means no change, values above 1.0 increase contrast)
+    contrast_factor = 2  # You can adjust this value based on your preference
+    contrast_img = enhancer.enhance(contrast_factor)
+
+    # Save the preprocessed image
+    contrast_img.save(input_image_path)
+
+def run(img):
+    path = os.path.join("../tessdata_best")
+    print(path)
+    with PyTessBaseAPI(path=path) as api:
+        api.SetImageFile(img)
+        text = api.GetUTF8Text()
+        print("text:",text)
+        print("text len:", len(text))
+        print("confidences:", api.AllWordConfidences())
+        return text
+        
+
+# api is automatically finalized when used in a with-statement (context manager).
+# otherwise api.End() should be explicitly called when it's no longer needed.
+
+################################################################################
+
+
 def my_view(request):
     if request.method == 'POST':
         if request.FILES:
@@ -17,7 +72,9 @@ def my_view(request):
 
         # Handle the form data here
         form_data = request.POST
-        return JsonResponse({"message": f'Form data received: {form_data}', "textIdentified" : "tesseract"})
+        # text = run("sample_7.jpeg") #
+        text = run("save.png")
+        return JsonResponse({"message": f'Form data received: {form_data}', "textIdentified" : str(text)})
         
     data = {"message": "Hello, Django!"}
     return JsonResponse(data)
