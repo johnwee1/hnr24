@@ -14,7 +14,7 @@ import {
 import { ThemeProvider, useTheme } from "@mui/material/styles";
 import Diff from "./Diff";
 
-import Camera from "react-html5-camera-photo";
+import Camera, { FACING_MODES, IMAGE_TYPES } from "react-html5-camera-photo";
 import "react-html5-camera-photo/build/css/index.css";
 
 const ENDPOINT = "http://localhost:8000/ai/";
@@ -66,7 +66,6 @@ function CameraUse(props) {
     <Grid
       container
       direction="column"
-      alignItems="center"
       justifyContent="center"
       style={{
         minHeight: "100vh",
@@ -78,18 +77,19 @@ function CameraUse(props) {
       }}
     >
       {info === false ? (
-        <div style={{ margin: 10 }}>
-          <Typography align="center" variant="h3">
+        <div style={{ margin: 10}}>
+          <Typography align="center" variant="h4">
             Check your handwriting!
           </Typography>
           <Box
             display="flex"
-            flexDirection="column"
+            flexDirection="row"
             alignItems="center"
             justifyContent="center"
           >
             <Typography variant="body1">
               Text to write:{" "}
+              <br/>
               <TextField
                 type="text"
                 value={givenText}
@@ -97,8 +97,10 @@ function CameraUse(props) {
               />
             </Typography>
           </Box>
-          <Box width="100vw" height="100vw">
+          <br/>
+          <Box width="100%" height="80vw">
             <Camera
+              idealFacingMode={FACING_MODES.ENVIRONMENT}
               onTakePhoto={(dataUri) => {
                 handleTakePhoto(dataUri);
               }}
@@ -117,7 +119,10 @@ function CameraUse(props) {
             string1={info.textIdentified}
             mode="characters"
           />
-          <img src={imageUri}></img>
+          <br/>
+          <Box width="100%" height="80vw">
+            <img src={imageUri}></img>
+          </Box>
         </div>
       )}
     </Grid>
