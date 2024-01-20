@@ -1,0 +1,1 @@
+The following text contains errors either in spelling or capitalization. Return the corrected spelling exactly.
