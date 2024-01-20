@@ -10,7 +10,7 @@ import {useState} from 'react';
 import Camera from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css';
 
-const ENDPOINT = "http://localhost:5555";
+const ENDPOINT = "http://localhost:8000/ai/";
 window.state = {};
 
 function CameraUse (props) {
