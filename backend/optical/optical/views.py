@@ -56,6 +56,7 @@ import os
 import optical.tess as tess
 
 
+
 def my_view(request):
     if request.method == "POST":
         if request.FILES:
@@ -85,3 +86,16 @@ def my_view(request):
 
     data = {"message": "Hello, Django!"}
     return JsonResponse(data)
+
+
+def counter_check(request):
+    try:
+        if not os.path.exists("status.txt"):
+            raise Exception("useless")
+        print("readed")
+        os.remove("status.txt")
+        print("status delete")
+        return JsonResponse({"hit": 1})
+    except Exception as e:
+        print("Error:", e)
+        return JsonResponse({"hit": 0}, status=404)

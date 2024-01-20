@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import my_view
+from .views import my_view, counter_check
 
-urlpatterns = [path("admin/", admin.site.urls), path("ai/", my_view, name="my_view")]
+urlpatterns = [path("admin/", admin.site.urls), path("ai/", my_view, name="my_view"), path("counter/", counter_check, name="counter_check")]
+

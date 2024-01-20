@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-iu8f*@95c_%+!=2+(iy^8v+4#25oert@=owa!^towp5l#a-wsb
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+
 
 
 # Application definition
@@ -127,6 +127,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # Add the origins you want to allow
-    "https://yourfrontenddomain.com",
+    "http://192.168.60.124:8000",
+    "https://fabricoin.onrender.com"
 ]
-CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost:3000", "http://192.168.60.124:8000", "https://fabricoin.onrender.com"]
+ALLOWED_HOSTS = ["192.168.60.124", "localhost", "fabricoin.onrender.com"]
