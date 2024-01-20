@@ -1,7 +1,7 @@
 import cv2
 import os
 
-# The deskew method is NOT working.
+# The deskew class is NOT working.
 
 
 class Deskew:

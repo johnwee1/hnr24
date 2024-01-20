@@ -56,7 +56,7 @@ function CameraUse(props) {
           })
           .catch((err) => {
             alert(err);
-            setInfo({ textIdentified: "test" });
+            setInfo({ textIdentified: "test", suggestion: "suggestion" });
           });
       });
   }
@@ -110,24 +110,18 @@ function CameraUse(props) {
       ) : (
         <div style={{ margin: 10, width:"100vw" }}>
           <Typography variant="h3">Feedback</Typography>
-          <Box
-            display="flex"
-            flexDirection="row"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <p>{givenText}</p>
-            <p>{info.textIdentified}</p>
-            <Diff
-              string2={givenText}
-              string1={info.textIdentified}
-              mode="characters"
-            />
-          </Box>
-          <br/>
-          <Box width="100%" height="80vw">
-            <img src={imageUri}></img>
-          </Box>
+          {/* Find difference */}
+          {/*JSON.stringify(info)*/}
+          <p>{`What you wrote: ${info.textIdentified}`}</p>
+          <p>{`The correct spelling: ${givenText}`}</p>
+          <Diff
+            string2={givenText}
+            string1={info.textIdentified}
+            mode="characters"
+          />
+          <p>{`Suggestion for you: ${info.suggestion}`}</p>
+          <p></p>
+          <img src={imageUri}></img>
         </div>
       )}
     </Grid>

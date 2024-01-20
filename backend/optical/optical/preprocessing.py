@@ -1,9 +1,6 @@
-from PIL import Image
-from PIL import ImageEnhance
 import cv2
 import os
 import numpy as np
-from deskew import Deskew
 
 COMPRESSION_LEVEL = 3
 
@@ -18,7 +15,9 @@ COMPRESSION_LEVEL = 3
 
 
 def convert_to_png(input_path, output_path=None):
+    # this isn't used.
     if output_path is None:
+        # If output path is not specified, set output path as the filename, which should be save.png
         path, ext = os.path.splitext(input_path)
         output_path = f"{path}.png"
     jpeg_image = cv2.imread(input_path)
@@ -27,21 +26,13 @@ def convert_to_png(input_path, output_path=None):
     )
 
 
-def preprocessing_cv2(input_image_path, override=False):
+def preprocessing_cv2(image_content, override=False):
     """Preprocess an image by converting light-colored background to black and text to white."""
-    input_image_path = os.path.join(os.path.dirname(__file__), input_image_path)
-    # Read the image using OpenCV
-    image = cv2.imread(input_image_path)
 
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    blur = cv2.GaussianBlur(gray, (9, 9), 0)
-    thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
+    image = cv2.imdecode(np.frombuffer(image_content, np.uint8), cv2.IMREAD_COLOR)
+    print(f"image type = {type(image)}")
+    # image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    # image = cv2.GaussianBlur(image, (9, 9), 0)
+    # image = cv2.threshold(image, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
 
-    # Save the preprocessed image
-    if override:
-        output_image_path = input_image_path
-    else:
-        output_image_name, ext = os.path.splitext(input_image_path)
-        output_image_path = f"{output_image_name}.png"
-    cv2.imwrite(output_image_path, thresh)
-    return input_image_path
+    return image
