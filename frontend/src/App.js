@@ -19,7 +19,7 @@ import Diff from "./Diff";
 import Camera, { FACING_MODES, IMAGE_TYPES } from "react-html5-camera-photo";
 import "react-html5-camera-photo/build/css/index.css";
 
-const ENDPOINT = "http://localhost:8000/ai/";
+const ENDPOINT = "https://fabricoinbackend.onrender.com/ai";
 window.state = {};
 
 function CameraUse(props) {
@@ -132,25 +132,36 @@ function CameraUse(props) {
         <div style={{ margin: 10, width: "100vw" }}>
           <Typography variant="h3">Feedback</Typography>
           <p>{`What you wrote: ${info.textIdentified}`}</p>
-          <p>{`The correct spelling: ${givenText ? givenText : info.suggestion.replace("The correct spelling: ", "")}`}</p>
+          <p>{`The correct spelling: ${
+            givenText
+              ? givenText
+              : info.suggestion.replace("The correct spelling: ", "")
+          }`}</p>
           <Diff
-            string2={givenText ? givenText : info.suggestion.replace("The correct spelling: ", "")}
+            string2={
+              givenText
+                ? givenText
+                : info.suggestion.replace("The correct spelling: ", "")
+            }
             string1={info.textIdentified}
             mode="characters"
           />
-          {
-            givenText 
-            ? 
-            <p>{`Suggestion for you: ${info.suggestion.replace("The correct spelling: ", "")}`}</p>
-            :
+          {givenText ? (
+            <p>{`Suggestion for you: ${info.suggestion.replace(
+              "The correct spelling: ",
+              ""
+            )}`}</p>
+          ) : (
             <></>
-          }
+          )}
           <p></p>
           <img src={imageUri}></img>
-          <br/>
+          <br />
           <Button
             variant="outlined"
-            onClick={()=>{setInfo(false);}}
+            onClick={() => {
+              setInfo(false);
+            }}
           >
             Back
           </Button>
