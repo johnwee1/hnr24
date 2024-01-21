@@ -148,7 +148,7 @@ function CameraUse(props) {
             <p>{`Suggestion for you: ${info.suggestion.replace("The correct spelling: ", "")}`}</p>
             :
             <></>
-          )}
+          }
           <p></p>
           <img src={imageUri}></img>
           <br/>
