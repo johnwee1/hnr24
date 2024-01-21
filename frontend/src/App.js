@@ -19,7 +19,7 @@ import Diff from "./Diff";
 import Camera, { FACING_MODES, IMAGE_TYPES } from "react-html5-camera-photo";
 import "react-html5-camera-photo/build/css/index.css";
 
-const ENDPOINT = "https://fabricoinbackend.onrender.com/ai";
+const ENDPOINT = "https://fabricoinbackend.onrender.com/ai/";
 window.state = {};
 
 function CameraUse(props) {
