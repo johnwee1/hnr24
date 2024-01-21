@@ -56,7 +56,7 @@ function CameraUse(props) {
           })
           .catch((err) => {
             alert(err);
-            setInfo({ textIdentified: "test", suggestion: "suggestion" });
+            //setInfo({ textIdentified: "test", suggestion: "suggestion" });
           });
       });
   }
@@ -110,18 +110,29 @@ function CameraUse(props) {
       ) : (
         <div style={{ margin: 10, width:"100vw" }}>
           <Typography variant="h3">Feedback</Typography>
-          {/* Find difference */}
-          {/*JSON.stringify(info)*/}
           <p>{`What you wrote: ${info.textIdentified}`}</p>
-          <p>{`The correct spelling: ${givenText}`}</p>
+          <p>{`The correct spelling: ${givenText ? givenText : info.suggestion.replace("The correct spelling: ", "")}`}</p>
           <Diff
-            string2={givenText}
+            string2={givenText ? givenText : info.suggestion.replace("The correct spelling: ", "")}
             string1={info.textIdentified}
             mode="characters"
           />
-          <p>{`Suggestion for you: ${info.suggestion}`}</p>
+          {
+            givenText 
+            ? 
+            <p>{`Suggestion for you: ${info.suggestion.replace("The correct spelling: ", "")}`}</p>
+            :
+            <></>
+          }
           <p></p>
           <img src={imageUri}></img>
+          <br/>
+          <Button
+            variant="outlined"
+            onClick={()=>{setInfo(false);}}
+          >
+            Back
+          </Button>
         </div>
       )}
     </Grid>

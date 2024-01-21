@@ -127,8 +127,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # Add the origins you want to allow
+    "http://localhost:3001",
     "http://192.168.60.124:8000",
     "https://fabricoin.onrender.com"
 ]
-CSRF_TRUSTED_ORIGINS = ["http://localhost:3000", "http://192.168.60.124:8000", "https://fabricoin.onrender.com"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost:3000","http://localhost:3001", "http://192.168.60.124:8000", "https://fabricoin.onrender.com"]
 ALLOWED_HOSTS = ["192.168.60.124", "localhost", "fabricoin.onrender.com"]
