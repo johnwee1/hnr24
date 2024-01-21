@@ -1,4 +1,5 @@
 **/venv/
 **/env/
 .python-version
-__pycache__
+**/__pycache__/
+./backend/optical/optical/__pycache__/

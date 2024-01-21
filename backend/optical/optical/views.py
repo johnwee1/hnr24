@@ -54,7 +54,7 @@ import os
 
 ################################################################################
 import optical.tess as tess
-
+import optical.chatgpt as chatgpt
 
 
 def my_view(request):
@@ -77,10 +77,12 @@ def my_view(request):
             form_data = request.POST
             # text = run("sample_7.jpeg") #
             text = tess.tesseract(file_content)
+            _, suggestion = chatgpt.prompt_model("prompt.txt", text)
             return JsonResponse(
                 {
                     "message": f"Form data received: {form_data}",
                     "textIdentified": str(text),
+                    "suggestion": suggestion,
                 }
             )
 

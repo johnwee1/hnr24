@@ -22,7 +22,6 @@ def tesseract(img):
         print(api.AllWordConfidences())
     if len(text) == 0:
         return "Sentence not found"
-    # return chatgpt.prompt_model("prompt.txt", text)
     return text
 
 
