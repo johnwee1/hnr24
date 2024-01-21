@@ -10,6 +10,8 @@ import {
   Toolbar,
   Typography,
   Box,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import { ThemeProvider, useTheme } from "@mui/material/styles";
 import Diff from "./Diff";
@@ -22,9 +24,17 @@ window.state = {};
 
 function CameraUse(props) {
   const [info, setInfo] = useState(false);
+  const [resubmit, setResubmit] = useState(false);
   const [imageUri, setImageUri] = useState("");
   const [givenText, setGivenText] = useState("");
   const theme = useTheme();
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setResubmit(false);
+  };
 
   function handleTakePhoto(dataUri) {
     // Do stuff with the photo...
@@ -52,16 +62,19 @@ function CameraUse(props) {
         fetch(ENDPOINT, fetchOptions)
           .then((response) => response.json())
           .then((data) => {
-            setInfo(data);
+            if (data.textIdentified === "Sentence not found") {
+              setResubmit(true);
+            } else {
+              setInfo(data);
+            }
           })
           .catch((err) => {
-            alert(err);
-            //setInfo({ textIdentified: "test", suggestion: "suggestion" });
+            setResubmit(true);
+            // setInfo({ textIdentified: "test", suggestion: "suggestion" });
           });
       });
   }
 
-  const text = "the quick brown fox jump over the lazy dog";
   return (
     <Grid
       container
@@ -77,7 +90,7 @@ function CameraUse(props) {
       }}
     >
       {info === false ? (
-        <div style={{ margin: 10}}>
+        <div style={{ margin: 10 }}>
           <Typography align="center" variant="h4">
             Check your handwriting!
           </Typography>
@@ -88,8 +101,7 @@ function CameraUse(props) {
             justifyContent="center"
           >
             <Typography variant="body1">
-              Text to write:{" "}
-              <br/>
+              Text to write: <br />
               <TextField
                 type="text"
                 value={givenText}
@@ -97,7 +109,7 @@ function CameraUse(props) {
               />
             </Typography>
           </Box>
-          <br/>
+          <br />
           <Box width="100%" height="80vw">
             <Camera
               idealFacingMode={FACING_MODES.ENVIRONMENT}
@@ -106,9 +118,18 @@ function CameraUse(props) {
               }}
             />
           </Box>
+          <Snackbar
+            open={resubmit}
+            autoHideDuration={6000}
+            onClose={handleClose}
+          >
+            <Alert onClose={handleClose} severity="info">
+              It seems you need to resubmit. Click here to resubmit.
+            </Alert>
+          </Snackbar>
         </div>
       ) : (
-        <div style={{ margin: 10, width:"100vw" }}>
+        <div style={{ margin: 10, width: "100vw" }}>
           <Typography variant="h3">Feedback</Typography>
           <p>{`What you wrote: ${info.textIdentified}`}</p>
           <p>{`The correct spelling: ${givenText ? givenText : info.suggestion.replace("The correct spelling: ", "")}`}</p>
