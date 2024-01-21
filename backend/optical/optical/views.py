@@ -73,11 +73,15 @@ def my_view(request):
             # with open(save_path, "wb") as destination_file:
             #     destination_file.write(file_content)
 
+            os.system("touch status.txt")
             # Handle the form data here
             form_data = request.POST
             # text = run("sample_7.jpeg") #
             text = tess.tesseract(file_content)
-            _, suggestion = chatgpt.prompt_model("prompt.txt", text)
+            try:
+                _, suggestion = chatgpt.prompt_model("prompt.txt", text)
+            except:
+                suggestion = ""
             return JsonResponse(
                 {
                     "message": f"Form data received: {form_data}",

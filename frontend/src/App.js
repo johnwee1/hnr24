@@ -129,15 +129,19 @@ function CameraUse(props) {
           </Snackbar>
         </div>
       ) : (
-        <div style={{ margin: 10, width: "100vw" }}>
+        <div style={{ margin: 10, width: "100vw", overflowWrap: "normal" }}>
           <Typography variant="h3">Feedback</Typography>
+          
           <p>{`What you wrote: ${info.textIdentified}`}</p>
           <p>{`The correct spelling: ${givenText ? givenText : info.suggestion.replace("The correct spelling: ", "")}`}</p>
-          <Diff
-            string2={givenText ? givenText : info.suggestion.replace("The correct spelling: ", "")}
-            string1={info.textIdentified}
-            mode="characters"
-          />
+          <div>
+            <Diff
+              string2={givenText ? givenText : info.suggestion.replace("The correct spelling: ", "")}
+              string1={info.textIdentified}
+              mode="characters"
+              style={{ overflowWrap: "normal" }}
+            />
+          </div>
           {
             givenText 
             ? 
@@ -146,7 +150,7 @@ function CameraUse(props) {
             <></>
           }
           <p></p>
-          <img src={imageUri}></img>
+          <img width="90vw" src={imageUri}></img>
           <br/>
           <Button
             variant="outlined"
