@@ -19,7 +19,7 @@ import Diff from "./Diff";
 import Camera, { FACING_MODES, IMAGE_TYPES } from "react-html5-camera-photo";
 import "react-html5-camera-photo/build/css/index.css";
 
-const ENDPOINT = "http://localhost:8000/ai/";
+const ENDPOINT = "https://fabricoinbackend.onrender.com/ai";
 window.state = {};
 
 function CameraUse(props) {
@@ -133,6 +133,7 @@ function CameraUse(props) {
           <Typography variant="h3">Feedback</Typography>
           
           <p>{`What you wrote: ${info.textIdentified}`}</p>
+<<<<<<< HEAD
           <p>{`The correct spelling: ${givenText ? givenText : info.suggestion.replace("The correct spelling: ", "")}`}</p>
           <div>
             <Diff
@@ -147,14 +148,43 @@ function CameraUse(props) {
             ? 
             <p>{`Suggestion for you: ${info.suggestion.replace("The correct spelling: ", "")}`}</p>
             :
+=======
+          <p>{`The correct spelling: ${
+            givenText
+              ? givenText
+              : info.suggestion.replace("The correct spelling: ", "")
+          }`}</p>
+          <Diff
+            string2={
+              givenText
+                ? givenText
+                : info.suggestion.replace("The correct spelling: ", "")
+            }
+            string1={info.textIdentified}
+            mode="characters"
+          />
+          {givenText ? (
+            <p>{`Suggestion for you: ${info.suggestion.replace(
+              "The correct spelling: ",
+              ""
+            )}`}</p>
+          ) : (
+>>>>>>> 4847af02ebdfea079d5f64344b00d592ba628c6b
             <></>
-          }
+          )}
           <p></p>
+<<<<<<< HEAD
           <img width="90vw" src={imageUri}></img>
           <br/>
+=======
+          <img src={imageUri}></img>
+          <br />
+>>>>>>> 4847af02ebdfea079d5f64344b00d592ba628c6b
           <Button
             variant="outlined"
-            onClick={()=>{setInfo(false);}}
+            onClick={() => {
+              setInfo(false);
+            }}
           >
             Back
           </Button>
