@@ -23,5 +23,5 @@ COPY . /app
 
 WORKDIR /app/backend/optical
 # Specify the default command to run when the container starts
-CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
-# CMD ["bash"]
+# CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["bash"]
